@@ -1,3 +1,4 @@
+
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as model;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +12,7 @@ final authAPIProvider = Provider((ref) {
 });
 
 abstract class IAuthAPI {
-  FutureEither<model.Account> signUp({
+  FutureEither<model.User> signUp({
     required String email,
     required String password,
   });
@@ -19,7 +20,7 @@ abstract class IAuthAPI {
     required String email,
     required String password,
   });
-  Future<model.Account?> currentUserAccount();
+  Future<model.User?> currentUserAccount();
   FutureEitherVoid logout();
 }
 
@@ -28,7 +29,7 @@ class AuthAPI implements IAuthAPI {
   AuthAPI({required Account account}) : _account = account;
 
   @override
-  Future<model.Account?> currentUserAccount() async {
+  Future<model.User?> currentUserAccount() async {
     try {
       return await _account.get();
     } on AppwriteException {
@@ -39,7 +40,7 @@ class AuthAPI implements IAuthAPI {
   }
 
   @override
-  FutureEither<model.Account> signUp({
+  FutureEither<model.User> signUp({
     required String email,
     required String password,
   }) async {
